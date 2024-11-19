@@ -21,6 +21,7 @@ const useAppContextProvider = () => {
     if (Object.keys(graphData).length === 0){
       setIsDataLoading(true)
     }
+    
   }, [])
 
 
@@ -29,6 +30,8 @@ const useAppContextProvider = () => {
     //const fiscalDataRes = testData;
     const fiscalDataRes = axios.get('https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary')
       .then(res => res.data)
+
+      //Dev Note: need to write error handling
     return fiscalDataRes;
   };
 
@@ -36,6 +39,8 @@ const useAppContextProvider = () => {
     // TODO: Replace this with functionality to retrieve the data from the citizenshipSummary endpoint
     const citizenshipRes = await axios.get('https://hrf-asylum-be-b.herokuapp.com/cases//citizenshipSummary')
     .then(res => res.data)
+
+    //Dev Note: need to write error handling
     return citizenshipRes;
   };
 
