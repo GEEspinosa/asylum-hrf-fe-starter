@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import testData from '../data/test_data.json';
+//import testData from '../data/test_data.json';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
 
 const AppContext = createContext({});
@@ -12,20 +12,30 @@ const AppContext = createContext({});
  * - Populate the graphs with the stored data
  */
 const useAppContextProvider = () => {
-  const [graphData, setGraphData] = useState(testData);
+  const [graphData, setGraphData] = useState({});
   const [isDataLoading, setIsDataLoading] = useState(false);
 
   useLocalStorage({ graphData, setGraphData });
+  
+  useEffect(() => {  
+    if (Object.keys(graphData).length === 0){
+      setIsDataLoading(true)
+    }
+  }, [])
+
 
   const getFiscalData = () => {
     // TODO: Replace this with functionality to retrieve the data from the fiscalSummary endpoint
-    const fiscalDataRes = testData;
+    //const fiscalDataRes = testData;
+    const fiscalDataRes = axios.get('https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary')
+      .then(res => res.data)
     return fiscalDataRes;
   };
 
   const getCitizenshipResults = async () => {
     // TODO: Replace this with functionality to retrieve the data from the citizenshipSummary endpoint
-    const citizenshipRes = testData.citizenshipResults;
+    const citizenshipRes = await axios.get('https://hrf-asylum-be-b.herokuapp.com/cases//citizenshipSummary')
+    .then(res => res.data)
     return citizenshipRes;
   };
 
@@ -35,6 +45,10 @@ const useAppContextProvider = () => {
 
   const fetchData = async () => {
     // TODO: fetch all the required data and set it to the graphData state
+    let data1 = await getFiscalData()
+    let data2 = await getCitizenshipResults()
+    setGraphData({...data1, "citizenshipResults": [...data2]})
+    setIsDataLoading(false)
   };
 
   const clearQuery = () => {
