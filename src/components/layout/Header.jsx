@@ -25,10 +25,14 @@ export default function Header() {
         <NavLink to='/' className='nav-btn'>
           Home
         </NavLink>
+        <NavLink to='/graphs' className='nav-btn'>
+          Graphs
+        </NavLink>
+        
 
         {/* Dev Note: decided to protect access to graph for logged in users only */}
 
-        {isAuthenticated && (
+        {/* {isAuthenticated && (
           <NavLink to='/graphs' className='nav-btn'>
           Graphs
         </NavLink>
@@ -39,7 +43,7 @@ export default function Header() {
           <NavLink to='/profile' className='nav-btn'>
             Profile
           </NavLink>
-        )}
+        )} */}
         <LoggingButtons />
       </div>
     </header>

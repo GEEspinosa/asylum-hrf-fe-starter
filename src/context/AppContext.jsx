@@ -25,7 +25,6 @@ const useAppContextProvider = () => {
 
   let myAppState = localStorage.getItem('myAppState');
 
-
   // Dev Note: I decided to use conditional to test whether local storage has the data blob
   // or not on first render to immediately load the data without having to press query button.
   // When storage is "empty," it happens to have a length of 2.
@@ -35,7 +34,7 @@ const useAppContextProvider = () => {
   // from isDataLoading(true) -> fetchData() -> getfiscalData() && getCitizenshipData().
   // The responses from the latter two returns data to fetchData, awaiting to
   // then restructure it, set in state, and locally stored in the browser.
-  // !!!This useEffect along with the variable myAppState could be erased to bring 
+  // !!!This useEffect along with the variable myAppState could be erased to bring
   //the app to match deployed example!!!
 
   useEffect(() => {
@@ -57,6 +56,7 @@ const useAppContextProvider = () => {
   const getCitizenshipResults = () => {
     // TODO: Replace this with functionality to retrieve the data from the citizenshipSummary endpoint
     // Dev Question: would the below async/await and try/catch block be better?
+    // I erased the template async term before parentheses.
 
     // try {
     //   const citizenshipRes = await axios.get(`${baseURL}/citizenshipSummary`);
