@@ -21,7 +21,10 @@ export const GraphButtons = ({ mapView, setMapView }) => {
       </section>
 
       <section className='query-buttons flex-c gap-1'>
-        <button className='update-query primary-c text-amber-50' onClick={updateQuery}>
+        <button 
+          className='update-query primary-c text-amber-50' 
+          onClick={updateQuery}    
+        >
           Update Query
         </button>
         <button className='clear-query primary-c text-amber-50' onClick={clearQuery}>

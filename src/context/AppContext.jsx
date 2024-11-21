@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-//import testData from '../data/test_data.json';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
 
 const AppContext = createContext({});
+
+// Dev Note: added this for cleaner axios calls using interpolation
+
+let baseURL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 
 /**
  * TODO: Ticket 2:
@@ -11,36 +14,61 @@ const AppContext = createContext({});
  * - Store the data
  * - Populate the graphs with the stored data
  */
+
 const useAppContextProvider = () => {
   const [graphData, setGraphData] = useState({});
   const [isDataLoading, setIsDataLoading] = useState(false);
 
   useLocalStorage({ graphData, setGraphData });
-  
-  useEffect(() => {  
-    if (Object.keys(graphData).length === 0){
-      setIsDataLoading(true)
-    }
-    
-  }, [])
 
+  // Dev Note: assigned key from local storage to myAppState
+
+  let myAppState = localStorage.getItem('myAppState');
+
+
+  // Dev Note: I decided to use conditional to test whether local storage has the data blob
+  // or not on first render to immediately load the data without having to press query button.
+  // When storage is "empty," it happens to have a length of 2.
+  // I got this length by logging Object.keys(myAppState).length.
+  // Then I decided to trigger a useEffect prewritten into the template below by making
+  // setting isDataLoading to true. It sets off a chain reaction
+  // from isDataLoading(true) -> fetchData() -> getfiscalData() && getCitizenshipData().
+  // The responses from the latter two returns data to fetchData, awaiting to
+  // then restructure it, set in state, and locally stored in the browser.
+  // !!!This useEffect along with the variable myAppState could be erased to bring 
+  //the app to match deployed example!!!
+
+  useEffect(() => {
+    if (Object.keys(myAppState).length <= 2) {
+      setIsDataLoading(true);
+    }
+  }, []);
 
   const getFiscalData = () => {
     // TODO: Replace this with functionality to retrieve the data from the fiscalSummary endpoint
-    //const fiscalDataRes = testData;
-    const fiscalDataRes = axios.get('https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary')
-      .then(res => res.data)
 
-      //Dev Note: need to write error handling
+    const fiscalDataRes = axios
+      .get(`${baseURL}/fiscalSummary`)
+      .then(res => res.data)
+      .catch(err => console.log(err));
     return fiscalDataRes;
   };
 
-  const getCitizenshipResults = async () => {
+  const getCitizenshipResults = () => {
     // TODO: Replace this with functionality to retrieve the data from the citizenshipSummary endpoint
-    const citizenshipRes = await axios.get('https://hrf-asylum-be-b.herokuapp.com/cases//citizenshipSummary')
-    .then(res => res.data)
+    // Dev Question: would the below async/await and try/catch block be better?
 
-    //Dev Note: need to write error handling
+    // try {
+    //   const citizenshipRes = await axios.get(`${baseURL}/citizenshipSummary`);
+    //   return citizenshipRes.data;
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    const citizenshipRes = axios
+      .get('https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary')
+      .then(res => res.data)
+      .catch(err => console.log(err));
     return citizenshipRes;
   };
 
@@ -50,10 +78,19 @@ const useAppContextProvider = () => {
 
   const fetchData = async () => {
     // TODO: fetch all the required data and set it to the graphData state
-    let data1 = await getFiscalData()
-    let data2 = await getCitizenshipResults()
-    setGraphData({...data1, "citizenshipResults": [...data2]})
-    setIsDataLoading(false)
+
+    // Dev Note: I Decided to use try/catch block to match async from template
+    // then I await the responses from both functions' axios calls, assigning them to two variables.
+    // This makes structuring an object appropriate for setting state in GraphData.
+    // Then I set isDataLoading back to initial state, false.
+    try {
+      let data1 = await getFiscalData();
+      let data2 = await getCitizenshipResults();
+      setGraphData({ ...data1, citizenshipResults: [...data2] });
+      setIsDataLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const clearQuery = () => {

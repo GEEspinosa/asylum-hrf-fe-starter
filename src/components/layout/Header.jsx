@@ -9,9 +9,11 @@ import { useAuth0 } from '@auth0/auth0-react'
  */
 export default function Header() {
   // TODO: Replace me
+
+  // Dev Note: replaced hardcoded boolean and destructured the variable from useAuth0 hook
+
   let {isAuthenticated} = useAuth0();
 
-  console.log(isAuthenticated)
   return (
     <header className='flex w-[100%] primary-c justify-between px-14'>
       <div className='flex justify-between'>
@@ -24,7 +26,8 @@ export default function Header() {
           Home
         </NavLink>
 
-        
+        {/* Dev Note: decided to protect access to graph for logged in users only */}
+
         {isAuthenticated && (
           <NavLink to='/graphs' className='nav-btn'>
           Graphs
@@ -33,7 +36,6 @@ export default function Header() {
 
 
         {isAuthenticated && (
-          
           <NavLink to='/profile' className='nav-btn'>
             Profile
           </NavLink>

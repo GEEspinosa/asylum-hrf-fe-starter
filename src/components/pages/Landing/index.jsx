@@ -4,6 +4,7 @@ import barGraph from '../../../assets/bar-graph.png';
 import paperStack from '../../../assets/paper-stack.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useDownloadData } from '../../../hooks/useDownloadData.js';
+import { useAuth0 } from '@auth0/auth0-react'
 //import {decodeBase64} from '../../../utils/decodeBase64.js';
 
 /**
@@ -15,6 +16,7 @@ import { useDownloadData } from '../../../hooks/useDownloadData.js';
 export const LandingPage = () => {
   const navigate = useNavigate();
   const { downloadCSV } = useDownloadData();
+  let { isAuthenticated } = useAuth0()
 
   const scrollToTop = () => {
     let scrollStep = -window.scrollY / 20; // Adjust the divisor for speed
@@ -45,10 +47,10 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      <section class='graphs-section flex-c pt-10'>
+      <section class='graphs-section flex-c pt-10 '>
         <div class='flex-c'>
           <div class='flex justify-center m-14 gap-20 text-2xl'>
-            <div class='flex-c gap-3'>
+            <div class='flex-c gap-3 '>
               <img src={barGraph} alt='bargraph' class='h-[300px] w-[500px]' />
               <h3>Search Grant Rates By Office</h3>
             </div>
@@ -61,6 +63,9 @@ export const LandingPage = () => {
               <h3>Search Grant Rates Over Time</h3>
             </div>
           </div>
+
+          {/* Dev Notes: need to protect access depending on logged in. */}
+
           <div class='flex align-center mx-auto gap-8'>
             <button class='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={() => navigate('/graphs')}>
               View the Data
@@ -69,6 +74,20 @@ export const LandingPage = () => {
               Download the Data
             </button>
           </div>
+
+
+
+          {/* {isAuthenticated && (<div class='flex align-center mx-auto gap-8'>
+            <button class='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={() => navigate('/graphs')}>
+              View the Data
+            </button>
+            <button class='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={downloadCSV}>
+              Download the Data
+            </button>
+          </div>)} */}
+
+
+
         </div>
       </section>
 

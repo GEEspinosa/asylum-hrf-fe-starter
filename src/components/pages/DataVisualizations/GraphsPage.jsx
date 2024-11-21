@@ -4,6 +4,8 @@ import { GraphButtons } from '../../common/GraphButtons.jsx';
 import { Loading } from '../../common/Loading.jsx';
 import { getGraphsHeader } from './getGraphsHeader.js';
 
+
+
 export const GraphsPage = () => {
   const [mapView, setMapView] = useState(mapTypes.ScatterPlot);
 
