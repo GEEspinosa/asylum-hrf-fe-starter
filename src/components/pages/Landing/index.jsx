@@ -68,7 +68,7 @@ export const LandingPage = () => {
             </div>
             <div className='flex-c gap-3'>
               <img src={pieChart} alt='piechart' className='h-[300px] contain-content' />
-              <h3>Search Grant RaNametes by Nationality</h3>
+              <h3>Search Grant Rates by Nationality</h3>
             </div>
             <div className='flex-c gap-3'>
               <img src={lineGraph} alt='linegraph' className='h-[300px] w-[500px]' />
