@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { mapTypes } from '../components/pages/DataVisualizations/getMapView.jsx';
 
 const AppContext = createContext({});
 
@@ -18,27 +19,26 @@ let baseURL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 const useAppContextProvider = () => {
   const [graphData, setGraphData] = useState({});
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [mapView, setMapView] = useState(mapTypes.ScatterPlot)
 
-  useLocalStorage({ graphData, setGraphData });
+  let firstRenderCheck = useLocalStorage({ graphData, setGraphData });
 
-  // Dev Note: assigned key from local storage to myAppState
-
-  let myAppState = localStorage.getItem('myAppState');
-
-  // Dev Note: I decided to use conditional to test whether local storage has the data blob
-  // or not on first render to immediately load the data without having to press query button.
-  // When storage is "empty," it happens to have a length of 2.
-  // I got this length by logging Object.keys(myAppState).length.
-  // Then I decided to trigger a useEffect prewritten into the template below by making
-  // setting isDataLoading to true. It sets off a chain reaction
+  
+  // Dev Note: I decided to use conditional logic inside useEffect below to test whether 
+  // the returning value of useLocalStorage hook is undefined or not. This basically sets up
+  // axios calls when landing on the page, immediately retrieving the real data, 
+  // bypassing any pre-rendered test data, without having to press query button.
+  // 
+  // This happens by changing isDataLoading state to true, firing off the useEffect 
+  // prewritten into the template below. It sets off a chain reaction
   // from isDataLoading(true) -> fetchData() -> getfiscalData() && getCitizenshipData().
   // The responses from the latter two returns data to fetchData, awaiting to
-  // then restructure it, set in state, and locally stored in the browser.
+  // then restructure it, set in state, and locally store it in the browser.
   // !!!This useEffect along with the variable myAppState could be erased to bring
-  //the app to match deployed example!!!
+  // the app to match deployed example!!!
 
   useEffect(() => {
-    if (Object.keys(myAppState).length <= 2) {
+    if (firstRenderCheck === undefined) {
       setIsDataLoading(true);
     }
   }, []);
@@ -112,6 +112,8 @@ const useAppContextProvider = () => {
     updateQuery,
     clearQuery,
     getYears,
+    mapView,
+    setMapView,
   };
 };
 

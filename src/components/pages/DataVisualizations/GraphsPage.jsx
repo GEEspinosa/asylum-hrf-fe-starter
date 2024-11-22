@@ -4,10 +4,18 @@ import { GraphButtons } from '../../common/GraphButtons.jsx';
 import { Loading } from '../../common/Loading.jsx';
 import { getGraphsHeader } from './getGraphsHeader.js';
 
-
+  // Dev Note: importing useAppContext to manage mapview state
+  
+import { useAppContext } from '../../../context/AppContext.jsx';
 
 export const GraphsPage = () => {
-  const [mapView, setMapView] = useState(mapTypes.ScatterPlot);
+
+  //Dev Note: commented out useState hook below, now handling state in AppContext to allow 
+  // mapview to persist while navigating pages
+  
+  //const [mapView, setMapView] = useState(mapTypes.ScatterPlot);
+
+  const { mapView, setMapView } = useAppContext()
 
   return (
     <div className='secondary-c'>

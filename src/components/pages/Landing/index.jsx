@@ -4,10 +4,9 @@ import barGraph from '../../../assets/bar-graph.png';
 import paperStack from '../../../assets/paper-stack.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useDownloadData } from '../../../hooks/useDownloadData.js';
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0 } from '@auth0/auth0-react';
 
 // Dev Notes: I'm uncertain what the decodeBase64 import does.
-
 
 //import {decodeBase64} from '../../../utils/decodeBase64.js';
 
@@ -20,7 +19,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 export const LandingPage = () => {
   const navigate = useNavigate();
   const { downloadCSV } = useDownloadData();
-  let { isAuthenticated } = useAuth0()
+  let { isAuthenticated } = useAuth0();
 
   const scrollToTop = () => {
     let scrollStep = -window.scrollY / 20; // Adjust the divisor for speed
@@ -34,21 +33,19 @@ export const LandingPage = () => {
   };
 
   // Dev Note: below uses window.location object to reassign the humansrightsfirst homepage as current URL;
-  // I decided to do this because after trial and err, researching, 
-  //it seems the useNavigate hook doesn't work for external addresses
+  // I decided to do this because after trial and err, researching,
+  // it seems that the useNavigate hook doesn't work for external addresses.
 
   const handleReadMore = () => {
     // TODO: navigate to the humanrightsfirst.org homepage
     window.location.href = 'https://humanrightsfirst.org/';
   };
 
-
   // Dev Note: By using Chrome dev tools to inspect the elements of the deployed version of the website,
   // I was able to accurately recreate the rendered HTML and tailwind class
 
   return (
     <div className='flex-c w-[100vw] secondary-c'>
-
       <section className='flex primary-c pt-4 pb-8'>
         <div className='flex-c mx-auto'>
           <h1 className='text-6xl mb-8 text-white'>Asylum Office Grant Rate Tracker</h1>
@@ -61,8 +58,10 @@ export const LandingPage = () => {
 
       <section className='graphs-section flex-c pt-10 '>
         <div className='flex-c'>
-          <div className='flex justify-center m-14 gap-20 text-2xl'>
-            <div className='flex-c gap-3 '>
+          {/* Dev Notes: below is origial styling that matches the deployed site in the README */}
+
+          {/* <div className='flex justify-center m-14 gap-20 text-2xl'>
+            <div className='flex-c gap-3'>
               <img src={barGraph} alt='bargraph' className='h-[300px] w-[500px]' />
               <h3>Search Grant Rates By Office</h3>
             </div>
@@ -72,6 +71,23 @@ export const LandingPage = () => {
             </div>
             <div className='flex-c gap-3'>
               <img src={lineGraph} alt='linegraph' className='h-[300px] w-[500px]' />
+              <h3>Search Grant Rates Over Time</h3>
+            </div>
+          </div> */}
+
+          {/* Dev Note: below is the adjusted styling of graph section to help improve image aspect ratio resizing*/}
+
+          <div className='flex justify-center m-14 gap-20 text-2xl '>
+            <div className='flex-c gap-3'>
+              <img src={barGraph} alt='bargraph' className='h-[300px] w-[500px] object-contain' />
+              <h3>Search Grant Rates By Office</h3>
+            </div>
+            <div className='flex-c gap-3'>
+              <img src={pieChart} alt='piechart' className='h-[300px] px-6 object-contain' />
+              <h3>Search Grant Rates by Nationality</h3>
+            </div>
+            <div className='flex-c gap-3'>
+              <img src={lineGraph} alt='linegraph' className='h-[300px] w-[500px] object-contain' />
               <h3>Search Grant Rates Over Time</h3>
             </div>
           </div>
@@ -98,7 +114,6 @@ export const LandingPage = () => {
               Download the Data
             </button>
           </div>)} */}
-
         </div>
       </section>
 
@@ -152,7 +167,7 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Dev Note: clicking read more will trigger the clickhandler 
+      {/* Dev Note: clicking 'read more' button will trigger the clickhandler 
       handleReadMore, navigating user to external homepage of organization. */}
 
       <section className='read-more-section'>
@@ -160,8 +175,6 @@ export const LandingPage = () => {
           Read More
         </button>
       </section>
-
-
 
       <section className='back-to-top p-16'>
         <button className='back-to-top font-medium' onClick={scrollToTop}>
