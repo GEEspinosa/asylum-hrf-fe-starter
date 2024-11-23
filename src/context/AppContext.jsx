@@ -24,10 +24,10 @@ const useAppContextProvider = () => {
   let firstRenderCheck = useLocalStorage({ graphData, setGraphData });
 
   
-  // Dev Note: I decided to use conditional logic inside useEffect below to test whether 
-  // the returning value of useLocalStorage hook is undefined or not. This basically sets up
+  // Dev Note: I decided to use conditional logic inside the useEffect hook below to test whether 
+  // the returning value of useLocalStorage is undefined or not. This basically sets up
   // axios calls when landing on the page, immediately retrieving the real data, 
-  // bypassing any pre-rendered test data, without having to press query button.
+  // bypassing any pre-rendered test data, without having to the press clear and update query buttons.
   // 
   // This happens by changing isDataLoading state to true, firing off the useEffect 
   // prewritten into the template below. It sets off a chain reaction
@@ -43,6 +43,10 @@ const useAppContextProvider = () => {
     }
   }, []);
 
+  // Dev Note: for the two functions getFiscalData() and getCitizenshipResults(), 
+  // I decided to use .then/.catch instead of asynch/await and try/catch
+  // they both return responses for fetchData() function below.
+
   const getFiscalData = () => {
     // TODO: Replace this with functionality to retrieve the data from the fiscalSummary endpoint
 
@@ -56,7 +60,7 @@ const useAppContextProvider = () => {
   const getCitizenshipResults = () => {
     // TODO: Replace this with functionality to retrieve the data from the citizenshipSummary endpoint
     // Dev Question: would the below async/await and try/catch block be better?
-    // I erased the template async term before parentheses.
+    // I erased the template async term before parentheses to keep both of these axios calls to the endpoint consistent.
 
     // try {
     //   const citizenshipRes = await axios.get(`${baseURL}/citizenshipSummary`);
@@ -79,7 +83,7 @@ const useAppContextProvider = () => {
   const fetchData = async () => {
     // TODO: fetch all the required data and set it to the graphData state
 
-    // Dev Note: I Decided to use try/catch block to match async from template
+    // Dev Note: I Decided to use try/catch block to match the async declaration written into the template
     // then I await the responses from both functions' axios calls, assigning them to two variables.
     // This makes structuring an object appropriate for setting state in GraphData.
     // Then I set isDataLoading back to initial state, false.
@@ -112,6 +116,8 @@ const useAppContextProvider = () => {
     updateQuery,
     clearQuery,
     getYears,
+
+    //Dev Note: I'm returning these two props specifically to allow GraphsPage.jsx use them!
     mapView,
     setMapView,
   };
