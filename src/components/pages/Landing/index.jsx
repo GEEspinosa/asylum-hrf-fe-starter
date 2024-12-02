@@ -58,23 +58,7 @@ export const LandingPage = () => {
 
       <section className='graphs-section flex-c pt-10 '>
         <div className='flex-c'>
-          {/* Dev Notes: below is origial styling that matches the deployed site in the README */}
-
-          {/* <div className='flex justify-center m-14 gap-20 text-2xl'>
-            <div className='flex-c gap-3'>
-              <img src={barGraph} alt='bargraph' className='h-[300px] w-[500px]' />
-              <h3>Search Grant Rates By Office</h3>
-            </div>
-            <div className='flex-c gap-3'>
-              <img src={pieChart} alt='piechart' className='h-[300px] contain-content' />
-              <h3>Search Grant Rates by Nationality</h3>
-            </div>
-            <div className='flex-c gap-3'>
-              <img src={lineGraph} alt='linegraph' className='h-[300px] w-[500px]' />
-              <h3>Search Grant Rates Over Time</h3>
-            </div>
-          </div> */}
-
+          
           {/* Dev Note: below is the adjusted styling of graph section to help improve image aspect ratio resizing*/}
 
           <div className='flex justify-center m-14 gap-20 text-2xl '>
@@ -92,28 +76,18 @@ export const LandingPage = () => {
             </div>
           </div>
 
-          {/* Dev Note: assigned useNavigate hook to navigate user to graph page upon click */}
-          {/* Dev Notes: assigned downloadCSV destructured from the imported custom hook useDownloadData() */}
+          {/* Dev Notes: used conditional rendering to protect access to graphs and download, depending on logged in. */}
 
-          <div className='flex align-center mx-auto gap-8'>
+          {isAuthenticated && (<div className='flex align-center mx-auto gap-8'>
             <button className='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={() => navigate('/graphs')}>
               View the Data
             </button>
             <button className='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={downloadCSV}>
               Download the Data
             </button>
-          </div>
 
-          {/* Dev Notes: uncomment if one needs to protect access to graphs and download, depending on logged in. */}
 
-          {/* {isAuthenticated && (<div className='flex align-center mx-auto gap-8'>
-            <button className='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={() => navigate('/graphs')}>
-              View the Data
-            </button>
-            <button className='bg-[#aaa] px-[10px] py-[5px] text-white text-md font-semibold' onClick={downloadCSV}>
-              Download the Data
-            </button>
-          </div>)} */}
+          </div>)}
         </div>
       </section>
 

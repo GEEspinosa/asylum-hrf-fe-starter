@@ -19,17 +19,16 @@ let baseURL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 const useAppContextProvider = () => {
   const [graphData, setGraphData] = useState({});
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [mapView, setMapView] = useState(mapTypes.ScatterPlot)
+  const [mapView, setMapView] = useState(mapTypes.ScatterPlot);
 
   let firstRenderCheck = useLocalStorage({ graphData, setGraphData });
 
-  
-  // Dev Note: I decided to use conditional logic inside the useEffect hook below to test whether 
+  // Dev Note: I decided to use conditional logic inside the useEffect hook below to test whether
   // the returning value of useLocalStorage is undefined or not. This basically sets up
-  // axios calls when landing on the page, immediately retrieving the real data, 
+  // axios calls when landing on the page, immediately retrieving the real data,
   // bypassing any pre-rendered test data, without having to the press clear and update query buttons.
-  // 
-  // This happens by changing isDataLoading state to true, firing off the useEffect 
+  //
+  // This happens by changing isDataLoading state to true, firing off the useEffect
   // prewritten into the template below. It sets off a chain reaction
   // from isDataLoading(true) -> fetchData() -> getfiscalData() && getCitizenshipData().
   // The responses from the latter two returns data to fetchData, awaiting to
@@ -43,7 +42,7 @@ const useAppContextProvider = () => {
     }
   }, []);
 
-  // Dev Note: for the two functions getFiscalData() and getCitizenshipResults(), 
+  // Dev Note: for the two functions getFiscalData() and getCitizenshipResults(),
   // I decided to use .then/.catch instead of asynch/await and try/catch
   // they both return responses for fetchData() function below.
 

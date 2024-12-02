@@ -7,7 +7,6 @@ import { Auth0Provider } from '@auth0/auth0-react';
 const AUTH_DOMAIN = import.meta.env.VITE_AUTH_DOMAIN;
 const AUTH_CLIENT_ID = import.meta.env.VITE_AUTH_CLIENT_ID;
 
-
 /**
  * TODO: Ticket 3:
  * Implement authentication using Auth0:
@@ -15,21 +14,22 @@ const AUTH_CLIENT_ID = import.meta.env.VITE_AUTH_CLIENT_ID;
  * - Add your credentials from Auth0 to a .env file (AUTH_DOMAIN, AUTH_CLIENT_ID)
  * - Set the domain, clientId, and authorizationParams
  */
+
+
+//Dev Note: imported and wrapped app with auth0Provider. 
+// Used the credentials from my auth0 account as values for the environmental variables in .env
+// set auth0Provider attributes with imported environmental ariables.
+
 createRoot(document.getElementById('root')).render(
+  <Auth0Provider
+    domain={AUTH_DOMAIN}
+    clientId={AUTH_CLIENT_ID}
+    authorizationParams={{
+      redirect_uri: 'http://localhost:5173/',
+    }}
+  >
     <ProvideAppContext>
-      <Auth0Provider
-        // domain = {'dev-wid71u7s3fffit0y.us.auth0.com'}
-        // clientId= {'jBDkcf8SCVIaNP4BqOw9Hm8zf8EEhrei'}
-        // authorizationParams={{
-        //   redirect_uri: 'http://localhost:5173/'
-        // }}
-        domain = {AUTH_DOMAIN}
-        clientId= {AUTH_CLIENT_ID}
-        authorizationParams={{
-          redirect_uri: 'http://localhost:5173/'
-        }}
-      >
-        <App />
-      </Auth0Provider>
+      <App />
     </ProvideAppContext>
+  </Auth0Provider>
 );

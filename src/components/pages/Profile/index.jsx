@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+
+
 /**
  * TODO: Ticket 3:
  * Implement authentication using Auth0:
@@ -8,16 +10,18 @@ import { useAuth0 } from '@auth0/auth0-react';
  * - Display the data
  * - Make this page a protected Route
  */
-const Profile = () => {
-  // TODO: Replace these with functionality from Auth0
 
+
+const Profile = () => {
+  
   //Dev Note: replaced hardcoded with variables pulled from useAuth0 hook
   const { user, isLoading, isAuthenticated, logout } = useAuth0();
 
-  console.log(user);
   if (isLoading || !user) {
     return <div className='text-center p-4'>Loading...</div>;
   }
+
+  //Dev Note: JSX below renders auth0's user object
 
   return (
     <>

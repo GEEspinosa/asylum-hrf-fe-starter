@@ -7,8 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react'
  * TODO: Ticket 3:
  * Implement authentication using Auth0
  */
+
 export default function Header() {
-  // TODO: Replace me
 
   // Dev Note: replaced hardcoded boolean and destructured the variable from useAuth0 hook
 
@@ -25,25 +25,22 @@ export default function Header() {
         <NavLink to='/' className='nav-btn'>
           Home
         </NavLink>
-        <NavLink to='/graphs' className='nav-btn'>
-          Graphs
-        </NavLink>
+       
         
+        {/* Dev Note: used conditional rendering to protect access to graph for logged in users only */}
 
-        {/* Dev Note: decided to protect access to graph for logged in users only */}
-
-        {/* {isAuthenticated && (
-          <NavLink to='/graphs' className='nav-btn'>
-          Graphs
-        </NavLink>
+        {isAuthenticated && (
+          <>
+            <NavLink to='/graphs' className='nav-btn'>
+              Graphs
+            </NavLink>
+            <NavLink to='/profile' className='nav-btn'>
+              Profile
+            </NavLink>
+          </>
         )}
 
 
-        {isAuthenticated && (
-          <NavLink to='/profile' className='nav-btn'>
-            Profile
-          </NavLink>
-        )} */}
         <LoggingButtons />
       </div>
     </header>

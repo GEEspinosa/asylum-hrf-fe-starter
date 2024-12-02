@@ -4,22 +4,22 @@ import { useAuth0 } from '@auth0/auth0-react';
  * TODO: Ticket 3:
  * Implement authentication and logging functionality using Auth0
  */
+
+
 export const LoggingButtons = () => {
-  // TODO: Replace these with Auth0 functionality
+  // Dev Note: Replace hardcode by destructuring from Auth0 hook
   let { loginWithRedirect, logout, isAuthenticated } = useAuth0()
    
-  //const isAuthenticated = false;
-
-
   const buttonText = isAuthenticated ? 'Log Out' : 'Log In';
+
+  //Dev Note: added functionality to handler below, testing whether isAuthenticated is truthy, 
+  //which determines whether clicking the button acts as a logout of login button.
 
   const handleLogging = () => {
     if (isAuthenticated) {
-      // TODO: Add Logout functionality here:
       logout()
       isAuthenticated = false
     } else {
-      // TODO: Add Redirect functionality here:
       loginWithRedirect()
     }
   };
